@@ -72,12 +72,12 @@
     (query db-spec (-> (select :*)     ;; TODO: Paginate this!
                        (from :todos))))
 
-  (create-todo! [{db-spec :spec} attrs]
+  (save-todo! [{db-spec :spec} attrs]
     (query-one db-spec (-> (insert-into :todos)
                            (values [attrs])
                            (returning :*))))
 
-  (update-todo! [{db-spec :spec} id attrs]
+  (set-todo! [{db-spec :spec} id attrs]
     (query-one db-spec (-> (update :todos)
                            (sset attrs)
                            (where [:= :id id])

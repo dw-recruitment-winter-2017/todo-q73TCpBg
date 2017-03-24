@@ -6,6 +6,7 @@
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/clojurescript "1.9.494"]
+                 [org.clojure/core.match "0.3.0-alpha4"]
 
                  [com.stuartsierra/component "0.3.1"]
                  [duct "0.8.2"]
