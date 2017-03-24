@@ -10,7 +10,10 @@
                  [com.stuartsierra/component "0.3.1"]
                  [duct "0.8.2"]
 
-                 [duct/hikaricp-component "0.1.0"]
+                 [org.postgresql/postgresql "9.4.1211"]
+                 [funcool/clojure.jdbc "0.9.0"]
+                 [hikari-cp "1.7.5"]
+                 [honeysql "0.8.2"]
                  [duct/ragtime-component "0.1.4"]
 
                  [compojure "1.5.1"]
@@ -25,6 +28,7 @@
                  [re-frame "0.9.2"]
                  [re-com "2.0.0"]
 
+                 [camel-snake-kebab "0.4.0"]
                  [environ "1.1.0"]
                  [org.slf4j/slf4j-nop "1.7.21"]]
 
