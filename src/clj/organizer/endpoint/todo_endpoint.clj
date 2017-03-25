@@ -47,10 +47,10 @@
 ;; actions                                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn- list [db]
+(defn list [db]
   (ok (db/list-todos db)))
 
-(defn- create [db params]
+(defn create [db params]
   (let [id  (uuid)
         now (current-time)
         attrs (create-attrs params id now)]
@@ -58,14 +58,14 @@
         (match {:ok todo}       (created todo)
                {:error message} (error message 409)))))
 
-(defn- update [db id params]
+(defn update [db id params]
   (let [now (current-time)
         attrs (update-attrs params now)]
     (-> (db/update-todo! db id attrs)
         (match {:ok todo}       (ok todo)
                {:error message} (error message 400)))))
 
-(defn- delete [db id]
+(defn delete [db id]
   (db/delete-todo! db id)
   (deleted id))
 

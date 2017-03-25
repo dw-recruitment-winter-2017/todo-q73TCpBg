@@ -37,6 +37,10 @@
   :plugins [[lein-environ "1.0.3"]
             [lein-cljsbuild "1.1.2"]]
 
+  :source-paths ["src/clj" "src/cljc"]
+
+  :test-paths ["test/clj"]
+
   :main ^:skip-aot organizer.main
 
   :target-path "target/%s/"
@@ -47,7 +51,7 @@
 
   :cljsbuild {:builds
               {:main {:jar true
-                      :source-paths ["src"]
+                      :source-paths ["src/cljc" "src/cljs"]
                       :compiler
                       {:output-to "target/cljsbuild/organizer/public/js/main.js"
                        :optimizations :advanced}}}}
@@ -82,7 +86,7 @@
                              [duct/figwheel-component "0.3.2"]
                              [figwheel "0.5.0-6"]]
 
-              :source-paths ["dev"]
+              :source-paths ["dev/clj"]
 
               :repl-options {:init-ns user
 

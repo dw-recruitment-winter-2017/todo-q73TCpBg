@@ -16,9 +16,10 @@
 
 (def dev-config
   {:app {:middleware [wrap-stacktrace]}
+
    :figwheel
    {:css-dirs ["resources/organizer/public/css"]
-    :builds   [{:source-paths ["src" "dev"]
+    :builds   [{:source-paths ["src/cljs" "src/cljc" "dev/cljs"]
                 :build-options
                 {:optimizations :none
                  :main "cljs.user"
