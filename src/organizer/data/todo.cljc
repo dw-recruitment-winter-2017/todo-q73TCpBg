@@ -26,7 +26,7 @@
 (defn- validate [spec attrs]
   (if (spec/valid? spec attrs)
     {:ok attrs}
-    {:error (spec/explain spec attrs)}))
+    {:error (spec/explain-str spec attrs)}))
 
 (defn validate-create [attrs]
   (validate ::create-attrs attrs))
