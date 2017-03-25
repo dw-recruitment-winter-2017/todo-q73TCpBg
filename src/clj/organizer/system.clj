@@ -1,5 +1,6 @@
 (ns organizer.system
   (:require [organizer.component.postgres :refer [postgres]]
+            [organizer.endpoint.example :refer [example-endpoint]]
             [organizer.endpoint.todo-endpoint :refer [todo-routes]]
             [clojure.java.io :as io]
             [com.stuartsierra.component :as component]
@@ -26,16 +27,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (def base-config
-  {:app {:middleware [[wrap-defaults :defaults]
-                      [wrap-route-aliases :aliases]
-                      [wrap-not-found :not-found]
+  {:app {:middleware [[wrap-not-found :not-found]
                       [wrap-webjars]
-                      [wrap-format :formats]]
+                      [wrap-format :formats]
+                      [wrap-defaults :defaults]
+                      [wrap-route-aliases :aliases]]
+
          :aliases    {"/" "/index.html"}
+
          :defaults   (meta-merge site-defaults
                                  {:static {:resources "organizer/public"}})
+
          :formats    [:json :transit-json]
+
          :not-found  (io/resource "organizer/errors/404.html")}
+
    :ragtime {:resource-path "organizer/migrations"}})
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -49,9 +55,11 @@
          :http    (jetty-server (:http config))
          :db      (postgres (:db config))
          :ragtime (ragtime (:ragtime config))
+         :example (endpoint-component example-endpoint)
          :todo    (endpoint-component todo-routes))
+
         (component/system-using
          {:http    [:app]
-          :app     [:todo]
+          :app     [:example :todo]
           :ragtime [:db]
           :todo    [:db]}))))

@@ -1,10 +1,15 @@
 (ns cljs.user
-  (:require [devtools.core :as devtools]
+  (:require [organizer.core :as organizer]
+            [devtools.core :as devtools]
             [figwheel.client :as figwheel]))
 
-(js/console.info "Starting in development mode")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; initialize cljs dev environment                                          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (enable-console-print!)
+
+(js/console.info "Starting in development mode")
 
 (devtools/install!)
 
@@ -12,3 +17,9 @@
 
 (defn log [& args]
   (.apply js/console.log js/console (apply array args)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; start the app                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(organizer/init)

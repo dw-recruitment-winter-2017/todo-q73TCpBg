@@ -5,5 +5,4 @@
   ^:displace {:http {:port 3000}})
 
 (def environ
-  {:http {:port (some-> env :port Integer.)}
-   :db   {:uri  (env :database-url)}})
+  {:http {:port (some-> env :port Integer.)}})

@@ -9,7 +9,7 @@
                  [org.clojure/core.match "0.3.0-alpha4"]
 
                  [com.stuartsierra/component "0.3.1"]
-                 [duct "0.8.2"]
+                 [duct "0.7.0"]
 
                  [org.postgresql/postgresql "9.4.1211"]
                  [funcool/clojure.jdbc "0.9.0"]
@@ -32,6 +32,7 @@
 
                  [camel-snake-kebab "0.4.0"]
                  [environ "1.1.0"]
+                 [meta-merge "0.1.1"]
                  [org.slf4j/slf4j-nop "1.7.21"]]
 
   :plugins [[lein-environ "1.0.3"]
@@ -86,7 +87,7 @@
                              [duct/figwheel-component "0.3.2"]
                              [figwheel "0.5.0-6"]]
 
-              :source-paths ["dev/clj"]
+              :source-paths ["dev/clj" "dev/cljc"]
 
               :repl-options {:init-ns user
 
