@@ -53,9 +53,18 @@
   :cljsbuild {:builds
               {:main {:jar true
                       :source-paths ["src/cljc" "src/cljs"]
+
                       :compiler
                       {:output-to "target/cljsbuild/organizer/public/js/main.js"
-                       :optimizations :advanced}}}}
+                       :optimizations :advanced}}
+
+               :test {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
+
+                      :compiler
+                      {:main organizer.runner
+                       :output-to "resources/public/js/compiled/test.js"
+                       :output-dir "resources/public/js/compiled/test/out"
+                       :optimizations :none}}}}
 
   :aliases {"run-task" ["with-profile" "+repl" "run" "-m"]
             "setup"    ["run-task" "dev.tasks/setup"]}
@@ -86,6 +95,8 @@
                              [com.cemerick/piggieback "0.2.1"]
                              [duct/figwheel-component "0.3.2"]
                              [figwheel "0.5.0-6"]]
+
+              :plugins      [[lein-doo "0.1.7"]]
 
               :source-paths ["dev/clj" "dev/cljc"]
 

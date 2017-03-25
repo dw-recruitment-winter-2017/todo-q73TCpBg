@@ -14,10 +14,22 @@
 (spec/def ::created-at inst?)
 (spec/def ::modified-at inst?)
 
-(spec/def ::create-attrs (spec/keys :req-un [::id ::completed ::description
-                                             ::created-at ::modified-at]))
+(spec/def ::create-attrs (spec/keys :req-un [::id
+                                             ::completed
+                                             ::description
+                                             ::created-at
+                                             ::modified-at]))
+
 (spec/def ::update-attrs (spec/keys :req-un [::modified-at]
-                                    :opt-un [::completed ::description]))
+
+                                    :opt-un [::completed
+                                             ::description]))
+
+(spec/def ::entity (spec/keys :req [::id
+                                    ::completed
+                                    ::description
+                                    ::created-at
+                                    ::modified-at]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; validation                                                               ;;
