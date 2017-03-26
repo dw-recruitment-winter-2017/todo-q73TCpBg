@@ -16,6 +16,11 @@
 ;; data accessors                                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;; application state
+(defn get-app-title [db]
+  (::title db))
+
+;;;; data model
 (defn load-todos [db attr-list]
   (->> attr-list
        (map #(todo %))

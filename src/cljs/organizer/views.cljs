@@ -3,11 +3,12 @@
             [re-com.core :as re-com]))
 
 (defn title []
-  (let [title (re-frame/subscribe [:title])]
+  (let [title (re-frame/subscribe [:app/title])]
     (fn []
       [re-com/title
-       :label @title
-       :level :level1])))
+       :level :level1
+       :label @title])))
+
 
 (defn main-panel []
   (fn []
