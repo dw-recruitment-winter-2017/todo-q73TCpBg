@@ -39,7 +39,7 @@
 ;;;; seed the database
 (reg-event-db :initialize-db (fn  [_ _] db/seed))
 
-;;;; bulk data load
+;;;; bulk todo data load
 (reg-event-fx
  :fetch-todos
  (fn [_ _]
@@ -51,3 +51,12 @@
 
 (reg-event-db :load-todos (fn [db [_ todo-attrs]]
                             (db/load-todos db todo-attrs)))
+
+;;;; create new todos
+(reg-event-db :accept-todo-input (fn [db _]
+                                   (db/accept-todo-input db)))
+
+(reg-event-db :block-todo-input (fn [db _]
+                                  (db/block-todo-input db)))
+
+(reg-event-fx :create-todo (fn [_ _]))
