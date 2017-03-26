@@ -7,6 +7,7 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/clojurescript "1.9.494"]
                  [org.clojure/core.match "0.3.0-alpha4"]
+                 [com.cognitect/transit-cljs "0.8.239"]
 
                  [com.stuartsierra/component "0.3.1"]
                  [duct "0.7.0"]
@@ -29,6 +30,7 @@
                  [reagent "0.6.0"]
                  [re-frame "0.9.2"]
                  [re-com "2.0.0"]
+                 [day8.re-frame/http-fx "0.1.3"]
 
                  [camel-snake-kebab "0.4.0"]
                  [environ "1.1.0"]

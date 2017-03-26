@@ -1,5 +1,6 @@
 (ns organizer.data.todo
-  (:require [#?(:clj clojure.spec, :cljs cljs.spec) :as spec]))
+  (:require [organizer.utils :refer [string->date uuid]]
+            [#?(:clj clojure.spec, :cljs cljs.spec) :as spec]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; data specs                                                               ;;
@@ -45,3 +46,16 @@
 
 (defn validate-update [attrs]
   (validate ::update-attrs attrs))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; constructor                                                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn todo [{:keys [id completed description created-at modified-at]
+             :as attrs}]
+  (let [data {::id          id
+              ::completed   completed
+              ::description description
+              ::created-at  created-at
+              ::modified-at modified-at}]
+    data))

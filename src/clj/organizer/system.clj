@@ -38,7 +38,7 @@
          :defaults   (meta-merge site-defaults
                                  {:static {:resources "organizer/public"}})
 
-         :formats    [:json :transit-json]
+         :formats    [:transit-json :json]
 
          :not-found  (io/resource "organizer/errors/404.html")}
 

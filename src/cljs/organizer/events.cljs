@@ -1,7 +1,9 @@
 (ns organizer.events
   (:require [organizer.config :as config]
             [organizer.db :as db]
-            [organizer.utils :as utils]
+            [organizer.utils :as utils :refer [transit-reader]]
+            [ajax.core :as ajax]
+            [day8.re-frame.http-fx]
             [re-frame.core :as re-frame]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -34,4 +36,18 @@
 ;; events                                                                   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;; seed the database
 (reg-event-db :initialize-db (fn  [_ _] db/seed))
+
+;;;; bulk data load
+(reg-event-fx
+ :fetch-todos
+ (fn [_ _]
+   {:http-xhrio {:method :get
+                 :uri "/todos/"
+                 :response-format (ajax/transit-response-format
+                                   {:reader transit-reader})
+                 :on-success [:load-todos]}}))
+
+(reg-event-db :load-todos (fn [db [_ todo-attrs]]
+                            (db/load-todos db todo-attrs)))
