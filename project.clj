@@ -56,6 +56,8 @@
 
                       :compiler
                       {:output-to "target/cljsbuild/organizer/public/js/main.js"
+                       :closure-defines {goog.DEBUG false}
+                       :pretty-print false
                        :optimizations :advanced}}
 
                :test {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
