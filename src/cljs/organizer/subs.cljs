@@ -9,3 +9,11 @@
 (re-frame/reg-sub :app/accepting-input (fn [db _]
                                          (db/accepting-input? db)))
 
+(re-frame/reg-sub :todo/list (fn [db _]
+                               (db/get-todo-ids db)))
+
+(re-frame/reg-sub :todo/description (fn [db [_ todo-id]]
+                                      (db/get-todo-description db todo-id)))
+
+(re-frame/reg-sub :todo/completed (fn [db [_ todo-id]]
+                                    (db/todo-completed? db todo-id)))

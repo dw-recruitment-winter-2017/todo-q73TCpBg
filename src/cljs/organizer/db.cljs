@@ -46,6 +46,25 @@
         new-todo-list (assoc todo-list id todo)]
     (assoc db ::todos new-todo-list)))
 
+(defn get-todo-ids [db]
+  (->> db
+       (::todos)
+       (keys)
+       (into [])))
+
+(defn get-todo [{:keys [::todos] :as db} todo-id]
+  (get todos todo-id))
+
+(defn get-todo-description [db todo-id]
+  (-> db
+      (get-todo todo-id)
+      (::todo/description)))
+
+(defn todo-completed? [db todo-id]
+  (-> db
+      (get-todo todo-id)
+      (::todo/completed)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; database seed                                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
