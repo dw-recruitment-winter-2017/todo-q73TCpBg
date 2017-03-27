@@ -1,6 +1,5 @@
 (ns organizer.system
   (:require [organizer.component.postgres :refer [postgres]]
-            [organizer.endpoint.example :refer [example-endpoint]]
             [organizer.endpoint.todo-endpoint :refer [todo-routes]]
             [clojure.java.io :as io]
             [com.stuartsierra.component :as component]
@@ -56,11 +55,10 @@
          :http    (jetty-server (:http config))
          :db      (postgres (:db config))
          :ragtime (ragtime (:ragtime config))
-         :example (endpoint-component example-endpoint)
          :todo    (endpoint-component todo-routes))
 
         (component/system-using
          {:http    [:app]
-          :app     [:example :todo]
+          :app     [:todo]
           :ragtime [:db]
           :todo    [:db]}))))
