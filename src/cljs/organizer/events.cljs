@@ -59,10 +59,10 @@
 
 (reg-event-fx
  :create-todo
- (fn [_world [_ val]]
+ (fn [_world [_ desc]]
    {:http-xhrio {:method          :post
                  :uri             "/todos/"
-                 :params          {:todo {:description val
+                 :params          {:todo {:description desc
                                           :completed false}}
                  :format          transit-request
                  :response-format transit-response
@@ -79,10 +79,23 @@
                    :response-format transit-response
                    :on-success      [:load-todo]}})))
 
-;;;; todo data loading
+(reg-event-fx
+ :delete-todo
+ (fn [_world [_ todo-id]]
+   (let [uri (todo-url todo-id)]
+     {:http-xhrio {:method          :delete
+                   :uri             uri
+                   :format          transit-request
+                   :response-format transit-response
+                   :on-success      [:remove-todo todo-id]}})))
+
+;;;; todo data accessors
 (reg-event-db :load-todo-list (fn [db [_ todo-attr-list]]
                                 (db/load-todo-list db todo-attr-list)))
 
 (reg-event-fx :load-todo (fn [{:keys [db]} [_ todo-attrs]]
                            {:db (db/load-todo db todo-attrs)
                             :dispatch [:block-todo-input]}))
+
+(reg-event-db :remove-todo (fn [db [_ todo-id]]
+                             (db/remove-todo db todo-id)))

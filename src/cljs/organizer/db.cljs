@@ -31,7 +31,7 @@
 (defn accepting-input? [db]
   (::accepting-input db))
 
-;;;; data model
+;;;; todo data model
 (defn load-todo-list [db attr-list]
   (->> attr-list
        (map #(todo %))
@@ -44,6 +44,11 @@
         todo (todo attrs)
         id (::todo/id todo)
         new-todo-list (assoc todo-list id todo)]
+    (assoc db ::todos new-todo-list)))
+
+(defn remove-todo [db todo-id]
+  (let [todo-list (::todos db)
+        new-todo-list (dissoc todo-list todo-id)]
     (assoc db ::todos new-todo-list)))
 
 (defn get-todo-ids [db]

@@ -21,7 +21,7 @@
    :md-icon-name "zmdi-delete"
    :size :larger
    :tooltip "Delete this entry"
-   :on-click (fn [])])
+   :on-click (fn [] (re-frame/dispatch [:delete-todo todo-id]))])
 
 (defn todo-description [todo-id]
   (let [description (re-frame/subscribe [:todo/description todo-id])]
@@ -36,4 +36,4 @@
    :children [[status-button todo-id]
               [todo-description todo-id]
               [re-com/gap :size "1"]
-              [delete-button]]])
+              [delete-button todo-id]]])
