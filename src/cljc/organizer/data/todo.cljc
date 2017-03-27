@@ -1,5 +1,5 @@
 (ns organizer.data.todo
-  (:require [organizer.utils :refer [string->date uuid]]
+  (:require [organizer.utils :refer [string->date ->uuid]]
             [#?(:clj clojure.spec, :cljs cljs.spec) :as spec]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

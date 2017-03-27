@@ -20,9 +20,14 @@
          (java.sql.Timestamp.))))
 
 #?(:clj
-   (defn uuid
+   (defn ->uuid
      ([] (java.util.UUID/randomUUID))
-     ([string] (java.util.UUID/fromString string))))
+     ([string] (java.util.UUID/fromString string)))
+
+   :cljs
+   (defn ->uuid
+     ([] (uuid))
+     ([string] (uuid string))))
 
 #?(:cljs
    (def transit-response

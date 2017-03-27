@@ -88,7 +88,8 @@
              :profiles/test {}
 
              :project/dev
-             {:dependencies [[duct/generate "0.7.0"]
+             {:dependencies [[org.clojure/test.check "0.9.0"]
+                             [duct/generate "0.7.0"]
                              [reloaded.repl "0.2.2"]
                              [org.clojure/tools.namespace "0.2.11"]
                              [org.clojure/tools.nrepl "0.2.12"]

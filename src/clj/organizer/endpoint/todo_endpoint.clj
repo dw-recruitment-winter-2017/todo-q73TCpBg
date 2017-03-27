@@ -1,7 +1,7 @@
 (ns organizer.endpoint.todo-endpoint
   (:require [organizer.boundary.database :as db]
             [organizer.data.todo :as todo]
-            [organizer.utils :refer [current-time todo-url uuid]]
+            [organizer.utils :refer [current-time todo-url ->uuid]]
             [clojure.core.match :refer [match]]
             [compojure.core :refer :all]
             [ring.util.response :as response :refer [response]]))
@@ -51,7 +51,7 @@
   (ok (db/list-todos db)))
 
 (defn create [db params]
-  (let [id  (uuid)
+  (let [id  (->uuid)
         now (current-time)
         attrs (create-attrs params id now)]
     (-> (db/create-todo! db attrs)
@@ -61,13 +61,13 @@
 (defn update [db id params]
   (let [now (current-time)
         attrs (update-attrs params now)
-        todo-id (uuid id)]
+        todo-id (->uuid id)]
     (-> (db/update-todo! db todo-id attrs)
         (match {:ok todo}       (ok todo)
                {:error message} (error message 400)))))
 
 (defn delete [db id]
-  (let [todo-id (uuid id)]
+  (let [todo-id (->uuid id)]
     (db/delete-todo! db todo-id)
     (deleted todo-id)))
 
