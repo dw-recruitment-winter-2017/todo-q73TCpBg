@@ -1,6 +1,15 @@
 # organizer
 
-FIXME: description
+Simple todo application. To run the app in development mode, follow the
+"Development" instructions below and start the server within the repl. The app
+will be hosted on `http://localhost:3000`.
+
+### Tasks left TODO (Do you see what I did there?)
+
+* There should be more tests than what's here now, both of the back end and
+front end application, but I ran short on time. The front-end database is
+validated against the database state spec for every database change, but I would
+also write more unit and integration tests before deploying in production
 
 ## Developing
 
