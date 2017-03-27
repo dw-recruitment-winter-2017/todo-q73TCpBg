@@ -1,5 +1,6 @@
 (ns organizer.utils
   (:require [cognitect.transit :as transit]
+            #?(:cljs [ajax.core :as ajax])
             [#?(:clj clojure.spec, :cljs cljs.spec) :as spec]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -24,8 +25,14 @@
      ([string] (java.util.UUID/fromString string))))
 
 #?(:cljs
-   (def transit-reader
-    (transit/reader :json {:handlers {"u" cljs.core/uuid}})))
+   (def transit-response
+     (let [transit-reader (transit/reader :json {:handlers
+                                                 {"u" cljs.core/uuid}})]
+       (ajax/transit-response-format {:reader transit-reader}))))
+
+#?(:cljs
+   (def transit-request
+     (ajax/transit-request-format)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; time parsing/formatting                                                  ;;

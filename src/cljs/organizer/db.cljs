@@ -32,12 +32,19 @@
   (::accepting-input db))
 
 ;;;; data model
-(defn load-todos [db attr-list]
+(defn load-todo-list [db attr-list]
   (->> attr-list
        (map #(todo %))
        (map (fn [t] [(::todo/id t) t]))
        (into {})
        (assoc db ::todos)))
+
+(defn load-todo [db attrs]
+  (let [todo-list (::todos db)
+        todo (todo attrs)
+        id (::todo/id todo)
+        new-todo-list (assoc todo-list id todo)]
+    (assoc db ::todos new-todo-list)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; database seed                                                            ;;

@@ -11,7 +11,7 @@
             [duct.middleware.route-aliases :refer [wrap-route-aliases]]
             [meta-merge.core :refer [meta-merge]]
             [ring.component.jetty :refer [jetty-server]]
-            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.format :as format]
             [ring.middleware.webjars :refer [wrap-webjars]]))
 
@@ -35,7 +35,7 @@
 
          :aliases    {"/" "/index.html"}
 
-         :defaults   (meta-merge site-defaults
+         :defaults   (meta-merge api-defaults
                                  {:static {:resources "organizer/public"}})
 
          :formats    [:transit-json :json]

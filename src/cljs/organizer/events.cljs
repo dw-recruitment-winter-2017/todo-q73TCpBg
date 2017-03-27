@@ -1,8 +1,8 @@
 (ns organizer.events
   (:require [organizer.config :as config]
             [organizer.db :as db]
-            [organizer.utils :as utils :refer [transit-reader]]
-            [ajax.core :as ajax]
+            [organizer.utils :as utils :refer [transit-response
+                                               transit-request]]
             [day8.re-frame.http-fx]
             [re-frame.core :as re-frame]))
 
@@ -37,26 +37,42 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;; seed the database
-(reg-event-db :initialize-db (fn  [_ _] db/seed))
+(reg-event-db :initialize-db (fn [_ _] db/seed))
 
-;;;; bulk todo data load
-(reg-event-fx
- :fetch-todos
- (fn [_ _]
-   {:http-xhrio {:method :get
-                 :uri "/todos/"
-                 :response-format (ajax/transit-response-format
-                                   {:reader transit-reader})
-                 :on-success [:load-todos]}}))
 
-(reg-event-db :load-todos (fn [db [_ todo-attrs]]
-                            (db/load-todos db todo-attrs)))
-
-;;;; create new todos
+;;;; application controls
 (reg-event-db :accept-todo-input (fn [db _]
                                    (db/accept-todo-input db)))
 
 (reg-event-db :block-todo-input (fn [db _]
                                   (db/block-todo-input db)))
 
-(reg-event-fx :create-todo (fn [_ _]))
+
+;;;; interact with the server
+(reg-event-fx
+ :fetch-todos
+ (fn [_ _]
+   {:http-xhrio {:method          :get
+                 :uri             "/todos/"
+                 :response-format transit-response
+                 :on-success      [:load-todo-list]}}))
+
+(reg-event-fx
+ :create-todo
+ (fn [_world [_ val]]
+   {:http-xhrio {:method          :post
+                 :uri             "/todos/"
+                 :params          {:todo {:description val
+                                          :completed false}}
+                 :format          transit-request
+                 :response-format transit-response
+                 :on-success      [:load-todo]}}))
+
+
+;;;; todo data loading
+(reg-event-db :load-todo-list (fn [db [_ todo-attr-list]]
+                                (db/load-todo-list db todo-attr-list)))
+
+(reg-event-fx :load-todo (fn [{:keys [db]} [_ todo-attrs]]
+                           {:db (db/load-todo db todo-attrs)
+                            :dispatch [:block-todo-input]}))
