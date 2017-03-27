@@ -39,6 +39,9 @@
 ;;;; seed the database
 (reg-event-db :initialize-db (fn [_ _] db/seed))
 
+;;;; routing
+(reg-event-db :current-page (fn [db [_ page]]
+                              (db/set-current-page db page)))
 
 ;;;; application controls
 (reg-event-db :accept-todo-input (fn [db _]

@@ -1,5 +1,6 @@
 (ns organizer.views
-  (:require [organizer.views.todo-heading :refer [todo-heading]]
+  (:require [organizer.views.about :refer [about-panel]]
+            [organizer.views.todo-heading :refer [todo-heading]]
             [organizer.views.todo-item :refer [todo-view]]
             [re-frame.core :as re-frame]
             [re-com.core :as re-com]))
@@ -20,7 +21,7 @@
        :children (for [todo-id @todo-ids]
                    ^{:key todo-id} [todo-view todo-id])])))
 
-(defn main-panel []
+(defn todo-panel []
   (fn []
     [re-com/v-box
      :align :center
@@ -29,3 +30,10 @@
      :children [[title]
                 [todo-heading]
                 [todo-list]]]))
+
+(defn page []
+  (let [current-page (re-frame/subscribe [:app/current-page])]
+    (fn []
+      (case @current-page
+        :about [about-panel]
+        [todo-panel]))))

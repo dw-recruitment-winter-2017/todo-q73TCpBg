@@ -33,7 +33,8 @@
                       [wrap-defaults :defaults]
                       [wrap-route-aliases :aliases]]
 
-         :aliases    {"/" "/index.html"}
+         :aliases    {"/" "/index.html"
+                      "/about" "/index.html"}
 
          :defaults   (meta-merge api-defaults
                                  {:static {:resources "organizer/public"}})

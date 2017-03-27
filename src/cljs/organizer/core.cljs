@@ -7,10 +7,11 @@
 
 (defn mount-root []
   (re-frame/clear-subscription-cache!)
-  (reagent/render [views/main-panel]
+  (reagent/render [views/page]
                   (.getElementById js/document "organizer")))
 
 (defn ^:export init []
   (re-frame/dispatch-sync [:initialize-db])
+  (re-frame/dispatch [:current-page js/window.location.pathname])
   (re-frame/dispatch [:fetch-todos])
   (mount-root))

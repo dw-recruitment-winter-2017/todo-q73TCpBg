@@ -6,11 +6,13 @@
 ;; data specs                                                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(spec/def ::current-page #{:about :todos})
 (spec/def ::title string?)
 (spec/def ::accepting-input boolean?)
 (spec/def ::todos (spec/map-of ::todo/id ::todo/entity))
 
 (spec/def ::state (spec/keys :req [::title
+                                   ::current-page
                                    ::accepting-input
                                    ::todos]))
 
@@ -19,6 +21,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;; application state
+(defn get-app-current-page [db]
+  (::current-page db))
+
 (defn get-app-title [db]
   (::title db))
 
@@ -30,6 +35,14 @@
 
 (defn accepting-input? [db]
   (::accepting-input db))
+
+(defn get-current-page [db]
+  (::current-page db))
+
+(defn set-current-page [db page]
+  (if (= page "/about")
+    (assoc db ::current-page :about)
+    (assoc db ::current-page :todos)))
 
 ;;;; todo data model
 (defn load-todo-list [db attr-list]
@@ -75,6 +88,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (def seed
-  {::title "Organize with LOVE!"
+  {::current-page :todos
+   ::title "Organize with LOVE!"
    ::accepting-input false
    ::todos {}})
