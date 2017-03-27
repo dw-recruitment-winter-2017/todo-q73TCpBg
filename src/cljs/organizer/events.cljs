@@ -1,8 +1,8 @@
 (ns organizer.events
   (:require [organizer.config :as config]
             [organizer.db :as db]
-            [organizer.utils :as utils :refer [transit-response
-                                               transit-request]]
+            [organizer.utils :as utils :refer [transit-response transit-request
+                                               todo-url]]
             [day8.re-frame.http-fx]
             [re-frame.core :as re-frame]))
 
@@ -68,6 +68,16 @@
                  :response-format transit-response
                  :on-success      [:load-todo]}}))
 
+(reg-event-fx
+ :update-todo-status
+ (fn [_world [_ todo-id status]]
+   (let [uri (todo-url todo-id)]
+     {:http-xhrio {:method          :put
+                   :uri             uri
+                   :params          {:todo {:completed status}}
+                   :format          transit-request
+                   :response-format transit-response
+                   :on-success      [:load-todo]}})))
 
 ;;;; todo data loading
 (reg-event-db :load-todo-list (fn [db [_ todo-attr-list]]

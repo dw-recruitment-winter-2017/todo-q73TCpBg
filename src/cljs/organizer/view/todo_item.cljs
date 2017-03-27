@@ -6,12 +6,15 @@
   (let [completed (re-frame/subscribe [:todo/completed todo-id])]
     (fn []
       (let [icon (if @completed "zmdi-check" "zmdi-circle-o")
-            tip (if @completed "Mark as incomplete" "Mark as done")]
+            tip (if @completed "Mark as incomplete" "Mark as done")
+            click-event (if @completed
+                          [:update-todo-status todo-id false]
+                          [:update-todo-status todo-id true])]
         [re-com/md-icon-button
          :md-icon-name icon
          :size :larger
          :tooltip tip
-         :on-click (fn [])]))))
+         :on-click (fn [] (re-frame/dispatch click-event))]))))
 
 (defn delete-button [todo-id]
   [re-com/md-icon-button

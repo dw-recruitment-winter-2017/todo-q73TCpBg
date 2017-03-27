@@ -60,14 +60,16 @@
 
 (defn update [db id params]
   (let [now (current-time)
-        attrs (update-attrs params now)]
-    (-> (db/update-todo! db id attrs)
+        attrs (update-attrs params now)
+        todo-id (uuid id)]
+    (-> (db/update-todo! db todo-id attrs)
         (match {:ok todo}       (ok todo)
                {:error message} (error message 400)))))
 
 (defn delete [db id]
-  (db/delete-todo! db id)
-  (deleted id))
+  (let [todo-id (uuid id)]
+    (db/delete-todo! db todo-id)
+    (deleted todo-id)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; routes                                                                   ;;
